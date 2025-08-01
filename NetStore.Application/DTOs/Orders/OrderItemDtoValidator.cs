@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetStore.Application.DTOs
+namespace NetStore.Application.DTOs.Orders
 {
     public class OrderItemDtoValidator : AbstractValidator<OrderItemDto>
     {

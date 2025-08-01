@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NetStore.Application.DTOs;
+using NetStore.Application.DTOs.Orders;
 using NetStore.Domain.Entities;
 using System;
 using System.Collections.Generic;

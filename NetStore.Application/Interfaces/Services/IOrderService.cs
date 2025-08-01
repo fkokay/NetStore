@@ -1,4 +1,4 @@
-﻿using NetStore.Application.DTOs;
+﻿using NetStore.Application.DTOs.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ namespace NetStore.Application.Interfaces.Services
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderDto>> GetAllOrdersAsync();
         Task<OrderDto> GetOrderByIdAsync(Guid orderId);
-        Task<Guid> CreateOrderAsync(OrderDto createOrderDto);
-        Task<bool> UpdateOrderAsync(Guid orderId, OrderDto updateOrderDto);
+        Task<IEnumerable<OrderDto>> GetOrdersAsync(int pageNumber, int pageSize);
+        Task<Guid> CreateOrderAsync(CreateOrderDto createOrderDto);
+        Task<bool> UpdateOrderAsync(UpdateOrderDto updateOrderDto);
         Task<bool> DeleteOrderAsync(Guid orderId);
     }
 }

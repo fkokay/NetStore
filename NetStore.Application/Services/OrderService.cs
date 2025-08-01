@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NetStore.Application.DTOs;
+using NetStore.Application.DTOs.Orders;
 using NetStore.Application.Interfaces.Repositories;
 using NetStore.Application.Interfaces.Services;
 using NetStore.Domain.Entities;
@@ -22,33 +22,18 @@ namespace NetStore.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync()
+        public async Task<Guid> CreateOrderAsync(CreateOrderDto createOrderDto)
         {
-            var orders = await _orderRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<OrderDto>>(orders);
-        }
+            // İş kuralları, validasyonlar burada yapılabilir.
 
-        public async Task<OrderDto> GetOrderByIdAsync(Guid orderId)
-        {
-            var order = await _orderRepository.GetByIdAsync(orderId);
-            return _mapper.Map<OrderDto>(order);
-        }
-
-        public async Task<Guid> CreateOrderAsync(OrderDto createOrderDto)
-        {
             var order = _mapper.Map<Order>(createOrderDto);
+            order.Id = Guid.NewGuid();
+            order.OrderDate = DateTime.UtcNow;
+
             await _orderRepository.AddAsync(order);
+            await _orderRepository.SaveChangesAsync();
+
             return order.Id;
-        }
-
-        public async Task<bool> UpdateOrderAsync(Guid orderId, OrderDto updateOrderDto)
-        {
-            var existingOrder = await _orderRepository.GetByIdAsync(orderId);
-            if (existingOrder == null) return false;
-
-            _mapper.Map(updateOrderDto, existingOrder);
-            await _orderRepository.UpdateAsync(existingOrder);
-            return true;
         }
 
         public async Task<bool> DeleteOrderAsync(Guid orderId)
@@ -56,7 +41,37 @@ namespace NetStore.Application.Services
             var order = await _orderRepository.GetByIdAsync(orderId);
             if (order == null) return false;
 
-            await _orderRepository.DeleteAsync(order);
+            _orderRepository.Remove(order);
+            await _orderRepository.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<OrderDto> GetOrderByIdAsync(Guid orderId)
+        {
+            var order = await _orderRepository.GetOrderWithItemsByIdAsync(orderId);
+            if (order == null) return null;
+
+            return _mapper.Map<OrderDto>(order);
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetOrdersAsync(int pageNumber, int pageSize)
+        {
+            var orders = await _orderRepository.GetOrdersAsync(pageNumber, pageSize);
+            return _mapper.Map<IEnumerable<OrderDto>>(orders);
+        }
+
+        public async Task<bool> UpdateOrderAsync(UpdateOrderDto updateOrderDto)
+        {
+            var order = await _orderRepository.GetByIdAsync(updateOrderDto.Id);
+            if (order == null) return false;
+
+            // Burada güncelleme işlemleri
+            _mapper.Map(updateOrderDto, order);
+
+            _orderRepository.Update(order);
+            await _orderRepository.SaveChangesAsync();
+
             return true;
         }
     }

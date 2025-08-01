@@ -9,7 +9,8 @@ namespace NetStore.Application.Interfaces.Repositories
 {
     public interface IOrderRepository
     {
-        Task<Order?> GetByIdAsync(Guid id);
+        Task<IEnumerable<Order>> GetOrdersAsync(int pageNumber, int pageSize);
+        Task<Order> GetOrderByIdAsync(Guid orderId);
         Task AddAsync(Order order);
         Task UpdateAsync(Order order);
         Task DeleteAsync(Guid id);

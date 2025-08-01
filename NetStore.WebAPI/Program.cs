@@ -3,10 +3,12 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using NetStore.Application.DTOs;
+using NetStore.Application.Commands.Orders;
+using NetStore.Application.DTOs.Orders;
 using NetStore.Application.Interfaces.Repositories;
 using NetStore.Application.Interfaces.Services;
 using NetStore.Application.Mappings;
+using NetStore.Application.Queries.Orders;
 using NetStore.Application.Services;
 using NetStore.Infrastructure.Data;
 using NetStore.Infrastructure.Repositories;
@@ -31,6 +33,8 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetStore API", Version = "v1" });
 });
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetOrdersQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateOrderCommandHandler).Assembly));
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 

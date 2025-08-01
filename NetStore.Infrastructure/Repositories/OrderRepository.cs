@@ -46,10 +46,21 @@ namespace NetStore.Infrastructure.Repositories
             return await _context.Orders.Include(o => o.Items).ToListAsync();
         }
 
-        public async Task<Order?> GetByIdAsync(Guid id)
+        public async Task<Order> GetOrderByIdAsync(Guid orderId)
         {
-            return await _context.Orders.Include(o => o.Items)
-                                        .FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.Orders
+                .Include(o => o.Items)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+        }
+
+        public async Task<IEnumerable<Order>> GetOrdersAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Orders
+                .Include(o => o.Items) // Gerekirse ilişkili veriler
+                .OrderByDescending(o => o.OrderDate)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
 
         public async Task UpdateAsync(Order order)

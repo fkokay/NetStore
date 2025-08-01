@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NetStore.Application.DTOs;
+using NetStore.Application.DTOs.Orders;
 using NetStore.Application.Interfaces.Repositories;
 using NetStore.Application.Interfaces.Services;
+using NetStore.Application.Queries.Orders;
 using NetStore.Domain.Entities;
 
 namespace NetStore.WebAPI.Controllers
@@ -11,29 +13,28 @@ namespace NetStore.WebAPI.Controllers
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderService _orderService;
+        private readonly IMediator _mediator;
 
-        public OrdersController(IOrderService orderService)
+        public OrdersController(IMediator mediator)
         {
-            _orderService = orderService;
-        }
-
-        // GET: api/orders
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var orders = await _orderService.GetAllOrdersAsync();
-            return Ok(orders);
+            _mediator = mediator;
         }
 
         // GET: api/orders/{id}
-        [HttpGet("{id:Guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> GetOrders(int pageNumber = 1, int pageSize = 10)
         {
-            var order = await _orderService.GetOrderByIdAsync(id);
-            if (order == null)
-                return NotFound();
+            var query = new GetOrdersQuery { PageNumber = pageNumber, PageSize = pageSize };
+            var orders = await _mediator.Send(query);
+            return Ok(orders);
+        }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrderById(Guid id)
+        {
+            var query = new GetOrderByIdQuery(id);
+            var order = await _mediator.Send(query);
+            if (order == null) return NotFound();
             return Ok(order);
         }
 
