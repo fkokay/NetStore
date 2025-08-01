@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NetStore.Application.DTOs;
 using NetStore.Application.Interfaces.Repositories;
+using NetStore.Application.Interfaces.Services;
 using NetStore.Domain.Entities;
 
 namespace NetStore.WebAPI.Controllers
@@ -10,61 +11,65 @@ namespace NetStore.WebAPI.Controllers
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderRepository _orderRepository;
-        private readonly IMapper _mapper;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(IOrderRepository orderRepository, IMapper mapper)
+        public OrdersController(IOrderService orderService)
         {
-            _orderRepository = orderRepository;
-            _mapper = mapper;
+            _orderService = orderService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OrderDto>> GetOrder(Guid id)
-        {
-            var order = await _orderRepository.GetByIdAsync(id);
-            if (order == null) return NotFound();
-
-            var orderDto = _mapper.Map<OrderDto>(order);
-            return Ok(orderDto);
-        }
-
+        // GET: api/orders
         [HttpGet]
-        public async Task<ActionResult<List<OrderDto>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var orders = await _orderRepository.GetAllAsync();
-            var ordersDto = _mapper.Map<List<OrderDto>>(orders);
-            return Ok(ordersDto);
+            var orders = await _orderService.GetAllOrdersAsync();
+            return Ok(orders);
         }
 
+        // GET: api/orders/{id}
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var order = await _orderService.GetOrderByIdAsync(id);
+            if (order == null)
+                return NotFound();
+
+            return Ok(order);
+        }
+
+        // POST: api/orders
         [HttpPost]
-        public async Task<ActionResult> CreateOrder([FromBody] OrderDto orderDto)
+        public async Task<IActionResult> Create([FromBody] OrderDto createOrderDto)
         {
-            var order = _mapper.Map<Order>(orderDto);
-            await _orderRepository.AddAsync(order);
-            return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, orderDto);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var newOrderId = await _orderService.CreateOrderAsync(createOrderDto);
+            return CreatedAtAction(nameof(GetById), new { id = newOrderId }, null);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateOrder(Guid id, [FromBody] OrderDto orderDto)
+        // PUT: api/orders/{id}
+        [HttpPut("{Guid:int}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] OrderDto updateOrderDto)
         {
-            if (id != orderDto.Id) return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var existingOrder = await _orderRepository.GetByIdAsync(id);
-            if (existingOrder == null) return NotFound();
+            var updated = await _orderService.UpdateOrderAsync(id, updateOrderDto);
+            if (!updated)
+                return NotFound();
 
-            _mapper.Map(orderDto, existingOrder);
-            await _orderRepository.UpdateAsync(existingOrder);
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteOrder(Guid id)
+        // DELETE: api/orders/{id}
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var existingOrder = await _orderRepository.GetByIdAsync(id);
-            if (existingOrder == null) return NotFound();
+            var deleted = await _orderService.DeleteOrderAsync(id);
+            if (!deleted)
+                return NotFound();
 
-            await _orderRepository.DeleteAsync(id);
             return NoContent();
         }
     }

@@ -35,6 +35,12 @@ namespace NetStore.Infrastructure.Repositories
             }
         }
 
+        public async Task DeleteAsync(Order order)
+        {
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<Order>> GetAllAsync()
         {
             return await _context.Orders.Include(o => o.Items).ToListAsync();
