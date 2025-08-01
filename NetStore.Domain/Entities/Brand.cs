@@ -10,15 +10,20 @@ namespace NetStore.Domain.Entities
 {
     public class Brand : BaseEntity
     {
-        public string Name { get; private set; }
-        public Image Logo { get; private set; }
+        public required string Name { get; set; }
+        public Image? Logo { get; set; }
 
-        public Brand(string name, Image logo)
+        public Brand()
+        {
+
+        }
+        public Brand(string name, Image? logo)
         {
             Name = name;
             Logo = logo;
         }
 
-        public ICollection<Product> Products { get; private set; } = new List<Product>();
+
+        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

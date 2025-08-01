@@ -14,5 +14,10 @@ namespace NetStore.Domain.ValueObjects
         {
             Url = url ?? throw new ArgumentNullException(nameof(url));
         }
+
+        private Image()
+        {
+
+        }
     }
 }

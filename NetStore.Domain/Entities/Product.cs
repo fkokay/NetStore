@@ -9,25 +9,30 @@ namespace NetStore.Domain.Entities
 {
     public class Product : BaseEntity
     {
-        public string Name { get; private set; }
-        public string? Description { get; private set; }
-        public decimal Price { get; private set; }
+        public required string Name { get; set; }
+        public string? Description { get; set; }
+        public decimal Price { get; set; }
 
-        public Guid BrandId { get; private set; }
-        public Brand Brand { get; private set; }
+        public Guid? BrandId { get; set; }
+        public Brand? Brand { get; set; }
 
-        public Guid CategoryId { get; private set; }
-        public Category Category { get; private set; }
+        public Guid? CategoryId { get; set; }
+        public Category? Category { get; set; }
 
-        public ICollection<ProductImage> Images { get; private set; } = new List<ProductImage>();
-        public ICollection<ProductVariation> Variations { get; private set; } = new List<ProductVariation>();
+        public ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
+        public ICollection<ProductVariation> Variations { get; set; } = new List<ProductVariation>();
 
-        public Product(string name, decimal price, Guid brandId, Guid categoryId)
+        public Product(string name, decimal price, Guid? brandId, Guid? categoryId)
         {
             Name = name;
             Price = price;
             BrandId = brandId;
             CategoryId = categoryId;
+        }
+
+        public Product()
+        {
+
         }
 
         public void AddImage(string url)

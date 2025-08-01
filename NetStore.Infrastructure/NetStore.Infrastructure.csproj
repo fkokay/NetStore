@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NetStore.Application\NetStore.Application.csproj" />
     <ProjectReference Include="..\NetStore.Domain\NetStore.Domain.csproj" />
   </ItemGroup>
 

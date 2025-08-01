@@ -10,19 +10,24 @@ namespace NetStore.Domain.Entities
 {
     public class Category : BaseEntity
     {
-        public string Name { get; private set; }
-        public Image Image { get; private set; }
+        public required string Name { get; set; }
+        public Image? Image { get; set; }
 
-        public Guid? ParentCategoryId { get; private set; }
-        public Category? ParentCategory { get; private set; }
+        public Guid? ParentCategoryId { get; set; }
+        public Category? ParentCategory { get; set; }
 
-        public ICollection<Category> SubCategories { get; private set; } = new List<Category>();
-        public ICollection<Product> Products { get; private set; } = new List<Product>();
+        public ICollection<Category> SubCategories { get; set; } = new List<Category>();
+        public ICollection<Product> Products { get; set; } = new List<Product>();
 
-        public Category(string name, Image image)
+        public Category(string name, Image? image)
         {
             Name = name;
             Image = image;
+        }
+
+        public Category()
+        {
+
         }
     }
 }
