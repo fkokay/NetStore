@@ -4,7 +4,7 @@ using NetStore.Domain.Entities;
 
 namespace NetStore.Application.Commands.Products;
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Guid>
 {
     private readonly IProductRepository _productRepository;
 
@@ -13,10 +13,11 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         _productRepository = productRepository;
     }
 
-    public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var product = new Product()
         {
+            Id = Guid.NewGuid(),
             Name = request.Name,
             Sku = request.Sku,
             Price = request.Price,

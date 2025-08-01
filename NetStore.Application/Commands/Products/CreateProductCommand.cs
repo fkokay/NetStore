@@ -2,4 +2,4 @@
 
 namespace NetStore.Application.Commands.Products;
 
-public record CreateProductCommand(string Name,string Sku, decimal Price) : IRequest<int>;
+public record CreateProductCommand(string Name,string Sku, decimal Price) : IRequest<Guid>;
