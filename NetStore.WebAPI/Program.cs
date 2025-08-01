@@ -10,6 +10,7 @@ using NetStore.Application.Interfaces.Services;
 using NetStore.Application.Mappings;
 using NetStore.Application.Queries.Orders;
 using NetStore.Application.Services;
+using NetStore.Application.Validators;
 using NetStore.Infrastructure.Data;
 using NetStore.Infrastructure.Repositories;
 using NetStore.WebAPI.Middleware;
@@ -24,6 +25,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<OrderDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<OrderItemDtoValidator>();
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

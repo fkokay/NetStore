@@ -12,12 +12,10 @@
     <Folder Include="DTOs\Products\" />
     <Folder Include="DTOs\Payments\" />
     <Folder Include="DTOs\Shipping\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="Services\Cargo\" />
     <Folder Include="Services\Commerce\" />
     <Folder Include="Services\EInvoice\" />
     <Folder Include="Services\Erp\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using NetStore.Application.Exceptions;
+using System.Net;
 using System.Text.Json;
 
 namespace NetStore.WebAPI.Middleware
@@ -6,44 +7,58 @@ namespace NetStore.WebAPI.Middleware
     public class GlobalExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<GlobalExceptionMiddleware> _logger;
 
-        public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
+        public GlobalExceptionMiddleware(RequestDelegate next)
         {
             _next = next;
-            _logger = logger;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext httpContext)
         {
             try
             {
-                await _next(context);
+                await _next(httpContext);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Unhandled exception occurred: {ex.Message}");
-                await HandleExceptionAsync(context, ex);
+                await HandleExceptionAsync(httpContext, ex);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var response = context.Response;
-            response.ContentType = "application/json";
+            context.Response.ContentType = "application/json";
 
-            // Hata durum kodu (ihtiyaca göre geliştirilebilir)
-            response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            HttpStatusCode status;
+            object? responseObj;
 
-            var errorResponse = new
+            switch (exception)
             {
-                StatusCode = response.StatusCode,
-                Message = "Sunucu hatası oluştu.",
-                Detailed = exception.Message // Prod ortamda gizlenebilir
-            };
+                case NotFoundException notFoundEx:
+                    status = HttpStatusCode.NotFound;
+                    responseObj = new { message = notFoundEx.Message };
+                    break;
 
-            var errorJson = JsonSerializer.Serialize(errorResponse);
-            return response.WriteAsync(errorJson);
+                case ValidationException validationEx:
+                    status = HttpStatusCode.BadRequest;
+                    responseObj = new { message = validationEx.Message, errors = validationEx.Errors };
+                    break;
+
+                case BusinessException businessEx:
+                    status = HttpStatusCode.BadRequest;
+                    responseObj = new { message = businessEx.Message };
+                    break;
+
+                default:
+                    status = HttpStatusCode.InternalServerError;
+                    responseObj = new { message = "Sunucu hatası oluştu." };
+                    break;
+            }
+
+            context.Response.StatusCode = (int)status;
+            var result = JsonSerializer.Serialize(responseObj);
+
+            return context.Response.WriteAsync(result);
         }
     }
 }
