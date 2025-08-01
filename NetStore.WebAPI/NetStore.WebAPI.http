@@ -1,0 +1,6 @@
+@NetStore.WebAPI_HostAddress = http://localhost:5217
+
+GET {{NetStore.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
