@@ -10,6 +10,8 @@ namespace NetStore.Domain.Entities
 {
     public class Order : BaseEntity
     {
+        public int OrderChannelId { get; set; }
+        public OrderChannel Channel { get; set; }
         public Guid CustomerId { get; set; }  // Müşteri Id (gerekirse Customer entity referansı eklenebilir)
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }

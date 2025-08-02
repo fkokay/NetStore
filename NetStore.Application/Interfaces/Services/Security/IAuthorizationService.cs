@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace NetStore.Application.Interfaces.Services.Security
+{
+    public interface IAuthorizationService
+    {
+        Task<bool> HasPermissionAsync(Guid userId, string permissionKey);
+    }
+}
