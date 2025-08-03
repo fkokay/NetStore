@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Events\" />
+    <Folder Include="DependencyInjection\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Services\Invoice\" />
+    <Folder Include="Services\Order\" />
+    <Folder Include="Services\Product\" />
+    <Folder Include="UseCases\Order\" />
+    <Folder Include="UseCases\Product\" />
+  </ItemGroup>
+
 </Project>
