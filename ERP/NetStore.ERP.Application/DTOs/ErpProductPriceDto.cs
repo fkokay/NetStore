@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetStore.ERP.SharedKernel.DTOs
+namespace NetStore.ERP.Application.DTOs
 {
-    public class ErpProductStockDto
+    public class ErpProductPriceDto
     {
         public string ProductCode { get; set; }
-        public decimal Stock { get; set; }
+        public decimal Price { get; set; }
     }
 }

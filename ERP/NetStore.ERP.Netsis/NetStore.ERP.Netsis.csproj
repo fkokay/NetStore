@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetStore.ERP.Abstractions\NetStore.ERP.Abstractions.csproj" />
-    <ProjectReference Include="..\NetStore.ERP.SharedKernel\NetStore.ERP.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

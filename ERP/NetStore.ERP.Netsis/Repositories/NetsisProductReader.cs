@@ -2,7 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NetStore.ERP.Abstractions.Interfaces;
-using NetStore.ERP.SharedKernel.DTOs;
+using NetStore.ERP.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
