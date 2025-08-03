@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36327.8 d17.14
+VisualStudioVersion = 17.14.36327.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStore.Domain", "NetStore.Domain\NetStore.Domain.csproj", "{65383BCC-8C3D-4A2A-868A-D1411EC97BEE}"
 EndProject
@@ -28,6 +28,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStore.ERP.WebApi", "ERP\NetStore.ERP.WebApi\NetStore.ERP.WebApi.csproj", "{51F290D2-5F2C-4BEA-A283-E74103874B12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStore.WebUI", "NetStore.WebUI\NetStore.WebUI.csproj", "{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStore.Erp.Infrastructure", "ERP\NetStore.Erp.Infrastructure\NetStore.Erp.Infrastructure.csproj", "{E98E7304-299E-4F01-AF25-B0E7200BDECF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStore.ERP.Application", "ERP\NetStore.ERP.Application\NetStore.ERP.Application.csproj", "{8992105E-429A-4EF0-8D7B-AAC87FAA3EF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,14 @@ Global
 		{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E98E7304-299E-4F01-AF25-B0E7200BDECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E98E7304-299E-4F01-AF25-B0E7200BDECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E98E7304-299E-4F01-AF25-B0E7200BDECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E98E7304-299E-4F01-AF25-B0E7200BDECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8992105E-429A-4EF0-8D7B-AAC87FAA3EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8992105E-429A-4EF0-8D7B-AAC87FAA3EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8992105E-429A-4EF0-8D7B-AAC87FAA3EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8992105E-429A-4EF0-8D7B-AAC87FAA3EF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +106,8 @@ Global
 		{8605C678-95C2-4A68-91E9-197C242433CB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{302B40BC-4114-4BA4-9317-45A5C770683F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{51F290D2-5F2C-4BEA-A283-E74103874B12} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E98E7304-299E-4F01-AF25-B0E7200BDECF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{8992105E-429A-4EF0-8D7B-AAC87FAA3EF3} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D59B98C-310C-49E6-9CCF-24ECE9172A32}
