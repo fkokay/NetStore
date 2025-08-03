@@ -15,64 +15,35 @@ namespace NetStore.Application.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
-
         public OrderService(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _mapper = mapper;
         }
 
-        public async Task<Guid> CreateOrderAsync(CreateOrderDto createOrderDto)
+        public Task<Guid> CreateOrderAsync(CreateOrderDto createOrderDto)
         {
-            // İş kuralları, validasyonlar burada yapılabilir.
-
-            var order = _mapper.Map<Order>(createOrderDto);
-            order.Id = Guid.NewGuid();
-            order.OrderDate = DateTime.UtcNow;
-
-            await _orderRepository.AddAsync(order);
-            await _orderRepository.SaveChangesAsync();
-
-            return order.Id;
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> DeleteOrderAsync(Guid orderId)
+        public Task<bool> DeleteOrderAsync(Guid orderId)
         {
-            var order = await _orderRepository.GetByIdAsync(orderId);
-            if (order == null) return false;
-
-            _orderRepository.Remove(order);
-            await _orderRepository.SaveChangesAsync();
-
-            return true;
+            throw new NotImplementedException();
         }
 
-        public async Task<OrderDto> GetOrderByIdAsync(Guid orderId)
+        public Task<OrderDto> GetOrderByIdAsync(Guid orderId)
         {
-            var order = await _orderRepository.GetOrderWithItemsByIdAsync(orderId);
-            if (order == null) return null;
-
-            return _mapper.Map<OrderDto>(order);
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<OrderDto>> GetOrdersAsync(int pageNumber, int pageSize)
+        public Task<IEnumerable<OrderDto>> GetOrdersAsync(int pageNumber, int pageSize)
         {
-            var orders = await _orderRepository.GetOrdersAsync(pageNumber, pageSize);
-            return _mapper.Map<IEnumerable<OrderDto>>(orders);
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> UpdateOrderAsync(UpdateOrderDto updateOrderDto)
+        public Task<bool> UpdateOrderAsync(UpdateOrderDto updateOrderDto)
         {
-            var order = await _orderRepository.GetByIdAsync(updateOrderDto.Id);
-            if (order == null) return false;
-
-            // Burada güncelleme işlemleri
-            _mapper.Map(updateOrderDto, order);
-
-            _orderRepository.Update(order);
-            await _orderRepository.SaveChangesAsync();
-
-            return true;
+            throw new NotImplementedException();
         }
     }
 }

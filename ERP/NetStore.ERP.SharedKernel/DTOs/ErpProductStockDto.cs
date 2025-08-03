@@ -8,5 +8,7 @@ namespace NetStore.ERP.SharedKernel.DTOs
 {
     public class ErpProductStockDto
     {
+        public string ProductCode { get; set; }
+        public decimal Stock { get; set; }
     }
 }

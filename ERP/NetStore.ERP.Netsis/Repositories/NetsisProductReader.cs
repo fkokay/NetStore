@@ -2,7 +2,6 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NetStore.ERP.Abstractions.Interfaces;
-using NetStore.ERP.Netsis.Mapping;
 using NetStore.ERP.SharedKernel.DTOs;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace NetStore.ERP.Netsis.Repositories
 
         public NetsisProductReader(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("Netsis");
+            _connectionString = configuration.GetConnectionString("Netsis") ?? throw new Exception("ConnectionStrings ayarlanmadı");
         }
 
         public async Task<List<ErpProductDto>> GetProductsAsync()
@@ -43,12 +42,12 @@ namespace NetStore.ERP.Netsis.Repositories
             return await connection.QueryFirstOrDefaultAsync<ErpProductDto>(sql, new { ProductCode = productCode });
         }
 
-        public Task<ErpProductStockDto> GetErpProductStockAsync()
+        public Task<List<ErpProductStockDto>> GetProductStockAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ErpProductPriceDto> GetErpProducrPriceAsync()
+        public Task<List<ErpProductPriceDto>> GetProductPriceAsync()
         {
             throw new NotImplementedException();
         }

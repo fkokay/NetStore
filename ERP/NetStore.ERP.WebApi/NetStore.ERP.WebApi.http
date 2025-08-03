@@ -1,6 +1,0 @@
-@NetStore.ERP.WebApi_HostAddress = http://localhost:5097
-
-GET {{NetStore.ERP.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

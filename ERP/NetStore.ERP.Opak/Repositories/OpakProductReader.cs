@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetStore.ERP.Opak.Repositories
 {
-    internal class OpakProductReader
+    public class OpakProductReader
     {
     }
 }
