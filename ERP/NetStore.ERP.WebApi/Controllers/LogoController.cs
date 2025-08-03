@@ -16,7 +16,9 @@ namespace NetStore.ERP.WebApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("products")]
         public async Task<IActionResult> GetProducts()
         {
             var products = await _logoProductReader.GetProductsAsync();
@@ -25,7 +27,7 @@ namespace NetStore.ERP.WebApi.Controllers
             return Ok(products);
         }
 
-        [HttpGet]
+        [HttpGet("product-by-code/{code}")]
         public async Task<IActionResult> GetProductByCode(string code)
         {
             var product = await _logoProductReader.GetProductByCodeAsync(code);
@@ -33,7 +35,7 @@ namespace NetStore.ERP.WebApi.Controllers
             return Ok(product);
         }
 
-        [HttpGet]
+        [HttpGet("product-prices")]
         public async Task<IActionResult> GetProductPrices()
         {
             var prices = await _logoProductReader.GetProductPriceAsync();
@@ -41,7 +43,7 @@ namespace NetStore.ERP.WebApi.Controllers
             return Ok(prices);
         }
 
-        [HttpGet]
+        [HttpGet("product-stocks")]
         public async Task<IActionResult> GetProductStocks()
         {
             var stocks = await _logoProductReader.GetProductStockAsync();

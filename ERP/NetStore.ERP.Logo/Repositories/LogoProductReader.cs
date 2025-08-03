@@ -23,7 +23,6 @@ namespace NetStore.ERP.Logo.Repositories
         public async Task<List<ErpProductDto>> GetProductsAsync()
         {
             using var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
 
             var sql = "SELECT CODE AS Code,NAME as Name FROM LG_001_ITEMS";
 
@@ -34,20 +33,18 @@ namespace NetStore.ERP.Logo.Repositories
         public async Task<ErpProductDto?> GetProductByCodeAsync(string productCode)
         {
             using var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
 
-            var sql = "SELECT CODE AS Code,NAME as Name FROM LG_001_ITEMS";
+            var sql = "SELECT CODE AS Code,NAME as Name FROM LG_001_ITEMS WHERE CODE = @Code";
 
-            var product = await connection.QueryFirstOrDefaultAsync<ErpProductDto>(sql);
+            var product = await connection.QueryFirstOrDefaultAsync<ErpProductDto>(sql, new { Code = productCode });
 
             return product;
         }
         public async Task<List<ErpProductPriceDto>> GetProductPriceAsync()
         {
             using var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
 
-            var sql = "SELECT CODE AS Code,NAME as Name FROM LG_001_ITEMS";
+            var sql = "SELECT CODE AS Code,0 AS Price FROM LG_001_ITEMS";
 
             var products = await connection.QueryAsync<ErpProductPriceDto>(sql);
 
@@ -56,9 +53,8 @@ namespace NetStore.ERP.Logo.Repositories
         public async Task<List<ErpProductStockDto>> GetProductStockAsync()
         {
             using var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
 
-            var sql = "SELECT CODE AS Code,NAME as Name FROM LG_001_ITEMS";
+            var sql = "SELECT CODE AS ProductCode,0 AS Stock FROM LG_001_ITEMS";
 
             var products = await connection.QueryAsync<ErpProductStockDto>(sql);
 
