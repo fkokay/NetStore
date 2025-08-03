@@ -23,8 +23,16 @@ namespace NetStore.ERP.Logo.Repositories
         public async Task<List<ErpProductDto>> GetProductsAsync()
         {
             using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
 
-            var sql = "SELECT CODE AS Code,NAME as Name FROM LG_001_ITEMS";
+            var sql = @"
+                SELECT
+                    ITEMS.CODE AS Code,
+                    ITEMS.NAME as Name
+                FROM
+                    LG_001_ITEMS AS ITEMS WITH(NOLOCK)
+                WHERE
+                    (ITEMS.ACTIVE = 0) AND (ITEMS.CARDTYPE NOT IN(4, 20, 21))";
 
             var products = await connection.QueryAsync<ErpProductDto>(sql);
 
@@ -33,8 +41,17 @@ namespace NetStore.ERP.Logo.Repositories
         public async Task<ErpProductDto?> GetProductByCodeAsync(string productCode)
         {
             using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
 
-            var sql = "SELECT CODE AS Code,NAME as Name FROM LG_001_ITEMS WHERE CODE = @Code";
+            var sql = @"
+                SELECT
+                    ITEMS.CODE AS Code,
+                    ITEMS.NAME as Name
+                FROM
+                    LG_001_ITEMS AS ITEMS WITH(NOLOCK)
+                WHERE
+                    CODE = @Code
+                    AND (ITEMS.ACTIVE = 0) AND (ITEMS.CARDTYPE NOT IN(4, 20, 21))";
 
             var product = await connection.QueryFirstOrDefaultAsync<ErpProductDto>(sql, new { Code = productCode });
 
@@ -43,22 +60,50 @@ namespace NetStore.ERP.Logo.Repositories
         public async Task<List<ErpProductPriceDto>> GetProductPriceAsync()
         {
             using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
 
-            var sql = "SELECT CODE AS Code,0 AS Price FROM LG_001_ITEMS";
+            var sql = @"
+                SELECT
+                    ITEMS.CODE AS Code,
+                    PRCLIST.PRICE AS Price
+                FROM
+                    LG_001_ITEMS AS ITEMS WITH(NOLOCK)
+                INNER JOIN
+                    LG_001_PRCLIST AS PRCLIST WITH(NOLOCK) ON ITEMS.LOGICALREF = PRCLIST.CARDREF
+                WHERE
+                    (ITEMS.ACTIVE = 0) AND (ITEMS.CARDTYPE NOT IN(4, 20, 21))
+                    AND PRCLIST.PTYPE = 2
+                    AND(PRCLIST.BEGDATE IS NULL OR PRCLIST.BEGDATE <= GETDATE())
+                    AND(PRCLIST.ENDDATE IS NULL OR PRCLIST.ENDDATE >= GETDATE())
+            ";
 
-            var products = await connection.QueryAsync<ErpProductPriceDto>(sql);
+            var prices = await connection.QueryAsync<ErpProductPriceDto>(sql);
 
-            return products.ToList();
+            return prices.ToList();
         }
+
         public async Task<List<ErpProductStockDto>> GetProductStockAsync()
         {
             using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var sql = @"
+                SELECT
+                    ITEMS.CODE AS ProductCode,
+                    ISNULL(SUM(GNTOTST.ONHAND - GNTOTST.RESERVED), 0) AS Stock
+                FROM
+                    LG_001_ITEMS AS ITEMS WITH(NOLOCK)
+                INNER JOIN
+                    LV_001_01_GNTOTST AS GNTOTST WITH(NOLOCK) ON GNTOTST.STOCKREF = ITEMS.LOGICALREF
+                WHERE
+                    (ITEMS.ACTIVE = 0) AND (ITEMS.CARDTYPE NOT IN(4, 20, 21))
+                    AND GNTOTST.INVENNO = -1
+                GROUP BY
+                    ITEMS.CODE
+            ";
 
-            var sql = "SELECT CODE AS ProductCode,0 AS Stock FROM LG_001_ITEMS";
+            var stocks = await connection.QueryAsync<ErpProductStockDto>(sql);
 
-            var products = await connection.QueryAsync<ErpProductStockDto>(sql);
-
-            return products.ToList();
+            return stocks.ToList();
         }
     }
 }

@@ -8,11 +8,11 @@ namespace NetStore.ERP.WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class LogoController : ControllerBase
     {
-        private readonly IErpProductReader _logoProductReader;
+        private readonly IErpProductReader _erpProductReader;
         private readonly ILogger<LogoController> _logger;
-        public LogoController(IErpProductReader logoProductReader, ILogger<LogoController> logger)
+        public LogoController(IErpProductReader erpProductReader, ILogger<LogoController> logger)
         {
-            _logoProductReader = logoProductReader;
+            _erpProductReader = erpProductReader;
             _logger = logger;
         }
 
@@ -21,7 +21,7 @@ namespace NetStore.ERP.WebApi.Controllers
         [HttpGet("products")]
         public async Task<IActionResult> GetProducts()
         {
-            var products = await _logoProductReader.GetProductsAsync();
+            var products = await _erpProductReader.GetProductsAsync();
             if (products == null) return NotFound();
 
             return Ok(products);
@@ -30,7 +30,7 @@ namespace NetStore.ERP.WebApi.Controllers
         [HttpGet("product-by-code/{code}")]
         public async Task<IActionResult> GetProductByCode(string code)
         {
-            var product = await _logoProductReader.GetProductByCodeAsync(code);
+            var product = await _erpProductReader.GetProductByCodeAsync(code);
             if (product == null) return NotFound();
             return Ok(product);
         }
@@ -38,7 +38,7 @@ namespace NetStore.ERP.WebApi.Controllers
         [HttpGet("product-prices")]
         public async Task<IActionResult> GetProductPrices()
         {
-            var prices = await _logoProductReader.GetProductPriceAsync();
+            var prices = await _erpProductReader.GetProductPriceAsync();
             if (prices == null) return NotFound();
             return Ok(prices);
         }
@@ -46,7 +46,7 @@ namespace NetStore.ERP.WebApi.Controllers
         [HttpGet("product-stocks")]
         public async Task<IActionResult> GetProductStocks()
         {
-            var stocks = await _logoProductReader.GetProductStockAsync();
+            var stocks = await _erpProductReader.GetProductStockAsync();
             if (stocks == null) return NotFound();
             return Ok(stocks);
 
