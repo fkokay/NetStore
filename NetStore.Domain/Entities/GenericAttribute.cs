@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetStore.ERP.Opak.Mapping
+namespace NetStore.Domain.Entities
 {
-    internal class OpakProductMapper
+    internal class GenericAttribute
     {
     }
 }

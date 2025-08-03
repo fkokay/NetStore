@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetStore.ERP.Logo.Mapping
+namespace NetStore.ERP.Abstractions.Interfaces
 {
-    internal class LogoProductMapper
+    internal class IErpCustomerReader
     {
     }
 }

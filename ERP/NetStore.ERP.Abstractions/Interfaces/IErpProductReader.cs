@@ -11,5 +11,7 @@ namespace NetStore.ERP.Abstractions.Interfaces
     {
         Task<List<ErpProductDto>> GetProductsAsync();
         Task<ErpProductDto?> GetProductByCodeAsync(string productCode);
+        Task<ErpProductStockDto> GetErpProductStockAsync();
+        Task<ErpProductPriceDto> GetErpProducrPriceAsync();
     }
 }

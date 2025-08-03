@@ -10,4 +10,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NetStore.ERP.Abstractions\NetStore.ERP.Abstractions.csproj" />
+    <ProjectReference Include="..\NetStore.ERP.Logo\NetStore.ERP.Logo.csproj" />
+    <ProjectReference Include="..\NetStore.ERP.Netsis\NetStore.ERP.Netsis.csproj" />
+    <ProjectReference Include="..\NetStore.ERP.Opak\NetStore.ERP.Opak.csproj" />
+    <ProjectReference Include="..\NetStore.ERP.SharedKernel\NetStore.ERP.SharedKernel.csproj" />
+  </ItemGroup>
+
 </Project>

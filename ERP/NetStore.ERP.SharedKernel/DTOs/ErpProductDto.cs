@@ -12,5 +12,9 @@ namespace NetStore.ERP.SharedKernel.DTOs
         public string Name { get; set; } = string.Empty;
         public string Unit { get; set; } = string.Empty;
         public decimal VatRate { get; set; }
+
+        public string Barcode { get; set; } = string.Empty;
+        public decimal Stock { get; set; }
+        public DateTime? LastUpdated { get; set; }
     }
 }

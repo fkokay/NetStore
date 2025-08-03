@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStore.ERP.Opak", "ERP\Ne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStore.ERP.WebApi", "ERP\NetStore.ERP.WebApi\NetStore.ERP.WebApi.csproj", "{51F290D2-5F2C-4BEA-A283-E74103874B12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStore.WebUI", "NetStore.WebUI\NetStore.WebUI.csproj", "{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{51F290D2-5F2C-4BEA-A283-E74103874B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51F290D2-5F2C-4BEA-A283-E74103874B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51F290D2-5F2C-4BEA-A283-E74103874B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A20B2A0-8C30-4AAD-9645-5511FE85E2E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
