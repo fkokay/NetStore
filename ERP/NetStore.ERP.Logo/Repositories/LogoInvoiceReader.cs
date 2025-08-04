@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NetStore.ERP.Logo.Repositories
 {
-    public class LogoPaymentWriter :IErpPaymentWriter
+    public class LogoInvoiceReader : IErpInvoiceReader
     {
     }
 }
