@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetStore.ERP.Abstractions.Interfaces
 {
-    public interface IErpProductWriter
+    public interface IErpInvoiceReader
     {
     }
 }

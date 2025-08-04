@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetStore.ERP.Abstractions.Interfaces
 {
-    internal class IErpOrderWriter
+    public interface IErpOrderWriter
     {
     }
 }

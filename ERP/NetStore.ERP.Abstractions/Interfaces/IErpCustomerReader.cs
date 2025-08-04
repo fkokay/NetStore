@@ -11,5 +11,6 @@ namespace NetStore.ERP.Abstractions.Interfaces
     {
         Task<List<ErpCustomerDto>> GetCustomersAsync();
         Task<ErpCustomerBalanceDto?> GetErpCustomerBalanceAsync(string customerCode);
+        Task<List<ErpCustomerAccountStatementDto>> GetErpCustomerAccountStatementAsync(string customerCode, DateTime? fromDate = null, DateTime? toDate = null);
     }
 }

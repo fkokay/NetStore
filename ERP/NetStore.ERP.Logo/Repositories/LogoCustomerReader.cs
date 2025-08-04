@@ -32,6 +32,11 @@ namespace NetStore.ERP.Logo.Repositories
             return products.ToList();
         }
 
+        public Task<List<ErpCustomerAccountStatementDto>> GetErpCustomerAccountStatementAsync(string customerCode, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ErpCustomerBalanceDto?> GetErpCustomerBalanceAsync(string customerCode)
         {
             using var connection = new SqlConnection(_connectionString);
