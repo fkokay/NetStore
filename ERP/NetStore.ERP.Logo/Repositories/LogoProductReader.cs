@@ -81,7 +81,6 @@ namespace NetStore.ERP.Logo.Repositories
 
             return prices.ToList();
         }
-
         public async Task<List<ErpProductStockDto>> GetProductStockAsync()
         {
             using var connection = new SqlConnection(_connectionString);
