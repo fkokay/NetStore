@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IErpProductReader, LogoProductReader>();
+builder.Services.AddScoped<IErpCustomerReader, LogoCustomerReader>();
 
 var app = builder.Build();
 

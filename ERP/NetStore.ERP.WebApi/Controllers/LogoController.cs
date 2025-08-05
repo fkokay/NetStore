@@ -5,14 +5,16 @@ using NetStore.ERP.Logo.Repositories;
 namespace NetStore.ERP.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/logo")]
     public class LogoController : ControllerBase
     {
         private readonly IErpProductReader _erpProductReader;
+        private readonly IErpCustomerReader _erpCustomerReader;
         private readonly ILogger<LogoController> _logger;
-        public LogoController(IErpProductReader erpProductReader, ILogger<LogoController> logger)
+        public LogoController(IErpProductReader erpProductReader,IErpCustomerReader erpCustomerReader, ILogger<LogoController> logger)
         {
             _erpProductReader = erpProductReader;
+            _erpCustomerReader = erpCustomerReader;
             _logger = logger;
         }
 
@@ -50,6 +52,39 @@ namespace NetStore.ERP.WebApi.Controllers
             if (stocks == null) return NotFound();
             return Ok(stocks);
 
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("customers")]
+        public async Task<IActionResult> GetCustomers()
+        {
+            var customers = await _erpCustomerReader.GetCustomersAsync();
+            if (customers == null) return NotFound();
+
+            return Ok(customers);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("customer-account-statements/{customerCode}")]
+        public async Task<IActionResult> GetCustomerAccountStatement(string customerCode)
+        {
+            var customerAccountStatements = await _erpCustomerReader.GetErpCustomerAccountStatementAsync(customerCode);
+            if (customerAccountStatements == null) return NotFound();
+
+            return Ok(customerAccountStatements);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("customer-balance/{customerCode}")]
+        public async Task<IActionResult> GetCustomerBalanceAsync(string customerCode)
+        {
+            var customerBalance = await _erpCustomerReader.GetErpCustomerBalanceAsync(customerCode);
+            if (customerBalance == null) return NotFound();
+
+            return Ok(customerBalance);
         }
     }
 }
